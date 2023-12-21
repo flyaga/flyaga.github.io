@@ -1,0 +1,110 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Unicode字元編碼轉換器的問與答</title>
+</head>
+
+<body>
+
+<h3><span style="background-color: rgb(0, 255, 255);"><a name="FAQ">問與答</a></span></h3>
+<p><b>誰需要字元編碼轉換器?</b></p>   
+<p>* 
+當接收郵件或者文件不能夠正確顯示,因爲文字編碼有錯,就需要字元編碼轉換器.<br>   
+<br>
+* 有大量非unicode編碼格式文字檔案, 並且需要把文件升級到Unicode格式的人. 
+或者也許需要轉換Unicode到老的編碼格式.<br>   
+<br>
+* 需要轉換DOS (CR/LF)、Unix (LF)、Mac (CR)換行格式的人.</p>   
+<p><b><a name="commandline">怎麽運行程式的命令行?</a><br> </b>tec &lt;原始檔案路徑&gt; &lt;-de:目的編碼代碼&gt; [-dp:目的文件路徑] [-dn:目的換行代碼] [-se:源編碼代碼] [-is] [-iw:包括文字] [-ew:排除文字] [-b2b] 
+[-b2p:備份路徑] [-nb]</p>    
+<table border="1" width="100%">
+  <tr>
+    <td width="28%">原始檔案路徑</td> 
+    <td width="72%">需要轉換的文件路徑, <font color=#ff0000>這個參數必須存在.</font><br> 例如,  
+      d:\source\*.txt</td>
+  </tr>
+  <tr>
+    <td width="28%">-de:目的編碼代碼</td>
+    <td width="72%">目的編碼代碼, <font color=#ff0000>這個參數必須存在.<br>    
+      </font>你從介面能夠得到代碼列表, 請看下面紅色框.<br>    
+      例如, -de:41, 表示目的編碼代碼41是UTF-8<br>  
+      <img border="0" src="index.1.gif" width="499" height="273"></td>
+  </tr>
+  <tr>
+    <td width="28%">-dp:目的文件路徑</td>
+    <td width="72%">目的文件路徑, 例如, -dp:d:\dest<br>
+      如果忽略此參數, 原始檔案將被轉換到同一路徑, 
+      並且原始檔案將被覆蓋.</td>
+  </tr>
+  <tr>
+    <td width="28%">-dn:目的換行代碼</td>
+    <td width="72%">目的換行代碼, 你從介面能夠得到代碼列表, 
+      請看下面紅色框.<br> 
+      例如, -dn:0, 代表不轉換換行格式.<br> 
+      <img border="0" src="index.2.gif" width="406" height="105"><br>
+      如果忽略此參數, 默認爲不轉換換行格式.</td> 
+  </tr>
+  <tr>
+    <td width="28%">-se:源編碼代碼</td>
+    <td width="72%">源編碼代碼, 你從介面能夠得到代碼列表, 
+      請看下面紅色框.<br>   
+      例如, -se:0, 代表自動檢測原始檔案編碼格式.<br> 
+      <img border="0" src="index.4.gif" width="497" height="228"><br>
+      如果忽略此參數, 默認爲 -se:0, 
+      代表自動檢測原始檔案編碼格式.</td>
+  </tr>
+  <tr>
+    <td width="28%">-is</td>
+    <td width="72%">包括子目錄,表示將轉換所有子目錄下符合條件的文件.</td>
+  </tr>
+  <tr>
+    <td width="28%">-iw:包括文字</td>
+    <td width="72%">在檔案名稱或者文件路徑中包括文字. 使用;作爲多個過濾的分隔符號號<br>
+      例如, -iw:\test\;2010*.log, 
+      表示查找原始檔案名或者路徑中包括 \test\ 或者 2010*.log的文件.</td>
+  </tr>
+  <tr>
+    <td width="28%">-ew:排除文字</td>
+    <td width="72%">在檔案名稱或者文件路徑中排除文字. 使用;作爲多個過濾的分隔符號號<br>
+      例如, -ew:.bak, 表示排除 .bak 文件</td>
+  </tr>
+  <tr>
+    <td width="28%">-b2b</td>
+    <td width="72%">備份檔案到.bak, 
+      當目的文件路徑和原始檔案路徑一樣的情況下被使用.</td>
+  </tr>
+  <tr>
+    <td width="28%">-b2p:備份路徑</td>
+    <td width="72%">備份檔案到指定路徑, 
+      當目的文件路徑和原始檔案路徑一樣的情況下被使用.<br>
+      例如, -b2b:d:\bak, 表示原始檔案將被備份到d:\bak目錄下</td>
+  </tr>
+  <tr>
+    <td width="28%">-nb</td>
+    <td width="72%">不備份原始檔案.</td>
+  </tr>
+</table>
+<p><b>命令行樣例1:<br> 
+</b>tec &quot;c:\source file\*.php&quot; -de:41 -b2b -is<br>       
+表示轉換在&quot;c:\source file\&quot; 包括子目錄路徑下的*.php到UTF-8編碼格式, 
+並且備份原始檔案到.bak</p>     
+<p><b>命令行樣例2:</b><br>
+tec &quot;c:\source file\*.php&quot; -de:-2 -dn:1 &quot;-dp:d:\dest file\&quot;    
+-is -ew:.bak<br>   
+表示轉換在&quot;c:\source file\&quot; 包括子目錄路徑下的 *.php到不帶bom頭的UTF-8編碼格式, 
+並且目的換行格式爲unix格式, 並且目的文件路徑爲&quot;d:\dest file&quot;, 
+並且不轉換在原始檔案路徑下的所有.bak文件.</p>  
+<p><b>什麽是Unicode?</b><br>
+Unicode爲每個字元提供唯一的號碼, 
+不管什麽平臺、程式和語言。有好幾個Unicode編碼格式: 
+最流行的爲UTF-8和UTF-16。UTF-8使用了一種可變長度的字元編碼, 
+基本拉丁字元代碼對應爲ASCII碼。</p>       
+<p><b>Unix,Dos,Mac這幾種換行格式有什麽區別？<br>
+</b>Unix系統裏，換行格式爲ascii碼"\n", 十六進位爲0x0a；Windows系統裏面，換行格式爲ascii碼"\n\r", 十六進位爲0x0a 0x0d；Mac系統裏，換行格式爲ascii碼"\r", 十六進位爲0x0d。一個直接後果是，Unix/Mac系統下的文件在Windows裏打開的話，所有文字會變成一行；而Windows裏的文件在Unix/Mac下打開的話，在每行的結尾可能會多出一個^M符號。</p>        
+<p><b>我還有問題需要聯繫誰?</b></p>    
+<p>請寫信到<a href="mailto:support@gofunnow.com">support@gofunnow.com</a>.</p>   
+
+</body>
+
+</html>

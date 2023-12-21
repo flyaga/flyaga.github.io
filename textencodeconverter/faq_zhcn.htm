@@ -1,0 +1,110 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Unicode字符编码转换器的问与答</title>
+</head>
+
+<body>
+
+<h3><span style="background-color: rgb(0, 255, 255);"><a name="FAQ">问与答</a></span></h3>
+<p><b>谁需要字符编码转换器?</b></p>   
+<p>* 
+当接收邮件或者文件不能够正确显示,因为文字编码有错,就需要字符编码转换器.<br>   
+<br>
+* 有大量非unicode编码格式文本文件, 并且需要把文件升级到Unicode格式的人. 
+或者也许需要转换Unicode到老的编码格式.<br>   
+<br>
+* 需要转换DOS (CR/LF)、Unix (LF)、Mac (CR)换行格式的人.</p>   
+<p><b><a name="commandline">怎么运行程序的命令行?</a><br> </b>tec &lt;源文件路径&gt; &lt;-de:目的编码代码&gt; [-dp:目的文件路径] [-dn:目的换行代码] [-se:源编码代码] [-is] [-iw:包括文字] [-ew:排除文字] [-b2b] 
+[-b2p:备份路径] [-nb]</p>    
+<table border="1" width="100%">
+  <tr>
+    <td width="28%">源文件路径</td> 
+    <td width="72%">需要转换的文件路径, <font color=#ff0000>这个参数必须存在.</font><br> 例如,  
+      d:\source\*.txt</td>
+  </tr>
+  <tr>
+    <td width="28%">-de:目的编码代码</td>
+    <td width="72%">目的编码代码, <font color=#ff0000>这个参数必须存在.<br>    
+      </font>你从界面能够得到代码列表, 请看下面红色框.<br>    
+      例如, -de:41, 表示目的编码代码41是UTF-8<br>  
+      <img border="0" src="index.1.gif" width="499" height="273"></td>
+  </tr>
+  <tr>
+    <td width="28%">-dp:目的文件路径</td>
+    <td width="72%">目的文件路径, 例如, -dp:d:\dest<br>
+      如果忽略此参数, 源文件将被转换到同一路径, 
+      并且源文件将被覆盖.</td>
+  </tr>
+  <tr>
+    <td width="28%">-dn:目的换行代码</td>
+    <td width="72%">目的换行代码, 你从界面能够得到代码列表, 
+      请看下面红色框.<br> 
+      例如, -dn:0, 代表不转换换行格式.<br> 
+      <img border="0" src="index.2.gif" width="406" height="105"><br>
+      如果忽略此参数, 默认为不转换换行格式.</td> 
+  </tr>
+  <tr>
+    <td width="28%">-se:源编码代码</td>
+    <td width="72%">源编码代码, 你从界面能够得到代码列表, 
+      请看下面红色框.<br>   
+      例如, -se:0, 代表自动检测源文件编码格式.<br> 
+      <img border="0" src="index.4.gif" width="497" height="228"><br>
+      如果忽略此参数, 默认为 -se:0, 
+      代表自动检测源文件编码格式.</td>
+  </tr>
+  <tr>
+    <td width="28%">-is</td>
+    <td width="72%">包括子目录,表示将转换所有子目录下符合条件的文件.</td>
+  </tr>
+  <tr>
+    <td width="28%">-iw:包括文字</td>
+    <td width="72%">在文件名称或者文件路径中包括文字. 使用;作为多个过滤的分隔符号<br>
+      例如, -iw:\test\;2010*.log, 
+      表示查找源文件名或者路径中包括 \test\ 或者 2010*.log的文件.</td>
+  </tr>
+  <tr>
+    <td width="28%">-ew:排除文字</td>
+    <td width="72%">在文件名称或者文件路径中排除文字. 使用;作为多个过滤的分隔符号<br>
+      例如, -ew:.bak, 表示排除 .bak 文件</td>
+  </tr>
+  <tr>
+    <td width="28%">-b2b</td>
+    <td width="72%">备份文件到.bak, 
+      当目的文件路径和源文件路径一样的情况下被使用.</td>
+  </tr>
+  <tr>
+    <td width="28%">-b2p:备份路径</td>
+    <td width="72%">备份文件到指定路径, 
+      当目的文件路径和源文件路径一样的情况下被使用.<br>
+      例如, -b2b:d:\bak, 表示源文件将被备份到d:\bak目录下</td>
+  </tr>
+  <tr>
+    <td width="28%">-nb</td>
+    <td width="72%">不备份源文件.</td>
+  </tr>
+</table>
+<p><b>命令行样例1:<br> 
+</b>tec &quot;c:\source file\*.php&quot; -de:41 -b2b -is<br>       
+表示转换在&quot;c:\source file\&quot; 包括子目录路径下的*.php到UTF-8编码格式, 
+并且备份源文件到.bak</p>     
+<p><b>命令行样例2:</b><br>
+tec &quot;c:\source file\*.php&quot; -de:-2 -dn:1 &quot;-dp:d:\dest file\&quot;    
+-is -ew:.bak<br>   
+表示转换在&quot;c:\source file\&quot; 包括子目录路径下的 *.php到不带bom头的UTF-8编码格式, 
+并且目的换行格式为unix格式, 并且目的文件路径为&quot;d:\dest file&quot;, 
+并且不转换在源文件路径下的所有.bak文件.</p>  
+<p><b>什么是Unicode?</b><br>
+Unicode为每个字符提供唯一的号码, 
+不管什么平台、程序和语言。有好几个Unicode编码格式: 
+最流行的为UTF-8和UTF-16。UTF-8使用了一种可变长度的字符编码, 
+基本拉丁字符代码对应为ASCII码。</p>       
+<p><b>Unix,Dos,Mac这几种换行格式有什么区别？<br>
+</b>Unix系统里，换行格式为ascii码"\n", 十六进制为0x0a；Windows系统里面，换行格式为ascii码"\n\r", 十六进制为0x0a 0x0d；Mac系统里，换行格式为ascii码"\r", 十六进制为0x0d。一个直接后果是，Unix/Mac系统下的文件在Windows里打开的话，所有文字会变成一行；而Windows里的文件在Unix/Mac下打开的话，在每行的结尾可能会多出一个^M符号。</p>        
+<p><b>我还有问题需要联系谁?</b></p>    
+<p>请写信到<a href="mailto:support@gofunnow.com">support@gofunnow.com</a>.</p>   
+
+</body>
+
+</html>
